@@ -1,0 +1,19 @@
+﻿{
+  "operationName": "getTabsTotal",
+  "variables": {
+    "filter": {
+      "filters": [
+        {
+          "column": "user_id",
+          "value": [ "630" ]
+        }
+      ],
+      "dateRange": {
+        "start": "2023-04-10",
+        "end": "2023-04-10"
+      },
+      "queryString": ""
+    }
+  },
+  "query": "query getTabsTotal($filter: FilterInput) {\n  allOrderCount(filter: $filter) {\n    received: receivedCount\n    invoiced: invoicedCount\n    dispatched: dispatchedCount\n    delivered: deliveredCount\n    replaced: replacedCount\n    __typename\n  }\n}\n"
+}

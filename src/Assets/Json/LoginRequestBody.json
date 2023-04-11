@@ -1,0 +1,8 @@
+{
+  "operationName": null,
+  "variables": {
+    "username": "username",
+    "password": "password"
+  },
+  "query": "mutation ($username: String!, $password: String!) {\n  login(username: $username, password: $password) {\n    token\n    businessUnit\n    User {\n      id\n      firstName\n      lastName\n      fullName\n      email\n      phoneNumber\n      hasLoggedInOnce\n      roleId\n      Distributor {\n        ...DistributorServicesFragment\n        __typename\n      }\n      Role {\n        id\n        name\n        displayName\n        __typename\n      }\n      billingCredentials {\n        userId: user_id\n        username\n        __typename\n      }\n      __typename\n    }\n    appPermissionData {\n      program\n      permission {\n        ...CrudFragment\n        __typename\n      }\n      __typename\n    }\n    page {\n      id\n      title\n      icon\n      url\n      active\n      children {\n        id\n        title\n        icon\n        url\n        active\n        children {\n          id\n          title\n          icon\n          url\n          active\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment CrudFragment on CRUD {\n  read\n  create\n  update\n  delete\n  __typename\n}\n\nfragment DistributorServicesFragment on Distributor {\n  id\n  title\n  batchImplementation\n  enableManualGRN\n  Towns {\n    id\n    __typename\n  }\n  servicesUsed {\n    logistic {\n      status\n      __typename\n    }\n    delivery {\n      status\n      __typename\n    }\n    billing {\n      status\n      url\n      versionCode\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n"
+}

@@ -1,0 +1,22 @@
+{
+  "operationName": "getInvoicedList",
+  "variables": {
+    "offset": 0,
+    "limit": 50,
+    "filter": {
+      "filters": [
+        {
+          "column": "user_id",
+          "value": [ "630" ]
+        }
+      ],
+      "dateRange": {
+        "start": "2023-04-10",
+        "end": "2023-04-10"
+      },
+      "queryString": "",
+      "sort": {}
+    }
+  },
+  "query": "query getInvoicedList($offset: Int, $limit: Int, $filter: FilterInput) {\n  invoices(offset: $offset, limit: $limit, filter: $filter) {\n    rows {\n      id\n      ...InvoiceFragment\n      invoiceDate\n      __typename\n    }\n    count\n    __typename\n  }\n}\n\nfragment InvoiceFragment on Invoice {\n  invoiceNumber\n  invoiceDate\n  isAbbreviatedInvoice\n  Distributor {\n    ...DistributorFragment\n    servicesUsed {\n      logistic {\n        status\n        __typename\n      }\n      delivery {\n        status\n        __typename\n      }\n      billing {\n        status\n        url\n        versionCode\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  User {\n    ...UserTitleFragment\n    __typename\n  }\n  RetailOutlet {\n    ...OutletTitleFragment\n    townId\n    Customers {\n      ...CustomerFragment\n      __typename\n    }\n    __typename\n  }\n  Route {\n    ...RouteTitleFragment\n    __typename\n  }\n  Channel {\n    ...ChannelFragment\n    __typename\n  }\n  Category {\n    ...CategorySummaryFragment\n    __typename\n  }\n  orderIds\n  amountDetails {\n    ...InvoiceAmountDetailsFragment\n    __typename\n  }\n  Customer {\n    ...CustomerFragment\n    __typename\n  }\n  billDiscountDetail {\n    ...BillDisocuntDetailsFragment\n    __typename\n  }\n  __typename\n}\n\nfragment CustomerFragment on Customer {\n  id\n  name\n  address\n  panNumber\n  distributorId\n  __typename\n}\n\nfragment DistributorFragment on Distributor {\n  id\n  title\n  __typename\n}\n\nfragment UserTitleFragment on User {\n  id\n  fullName\n  __typename\n}\n\nfragment OutletTitleFragment on RetailOutlet {\n  id\n  title\n  __typename\n}\n\nfragment InvoiceAmountDetailsFragment on InvoiceAmountDetails {\n  grossAmount\n  netAmount\n  taxAmount\n  taxableAmount\n  subTotal\n  billDiscount\n  tradeDiscount\n  discountAmount\n  promotionDiscount\n  topUpDiscount\n  __typename\n}\n\nfragment ChannelFragment on Channel {\n  id\n  title\n  __typename\n}\n\nfragment RouteTitleFragment on Route {\n  id\n  title\n  __typename\n}\n\nfragment CategorySummaryFragment on Category {\n  id\n  title\n  __typename\n}\n\nfragment BillDisocuntDetailsFragment on BillDiscountData {\n  id\n  amount\n  orderIds\n  title\n  __typename\n}\n"
+}

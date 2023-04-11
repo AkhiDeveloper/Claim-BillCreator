@@ -1,0 +1,17 @@
+﻿{
+  "operationName": "getReceivedCalls",
+  "variables": {
+    "offset": 0,
+    "limit": 50,
+    "filter": {
+      "filters": [],
+      "dateRange": {
+        "start": "2023-02-23",
+        "end": "2023-02-23"
+      },
+      "queryString": "",
+      "sort": {}
+    }
+  },
+  "query": "query getReceivedCalls($offset: Int, $limit: Int, $filter: FilterInput) {\n  receivedCalls(offset: $offset, limit: $limit, filter: $filter) {\n    rows {\n      ...CallFragment\n      stockReplacement: StockReplacement {\n        count: lineCount\n        groupId: id\n        __typename\n      }\n      Distributor {\n        ...DistributorFragment\n        servicesUsed {\n          logistic {\n            status\n            __typename\n          }\n          delivery {\n            status\n            __typename\n          }\n          billing {\n            status\n            url\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      isRetailerOrder\n      __typename\n    }\n    count\n    __typename\n  }\n}\n\nfragment CallFragment on Call {\n  id\n  RetailOutlet {\n    townId\n    ...OutletCategoryFragment\n    __typename\n  }\n  Route {\n    ...RouteTitleFragment\n    __typename\n  }\n  User {\n    ...UserTitleFragment\n    phoneNumber\n    __typename\n  }\n  Distributor {\n    ...DistributorFragment\n    __typename\n  }\n  callOrderValue {\n    ...CallOrderValueFragment\n    __typename\n  }\n  billDiscountDetail {\n    ...BillDisocuntDetailsFragment\n    __typename\n  }\n  topUpDiscountDetail {\n    ...BillDisocuntDetailsFragment\n    __typename\n  }\n  callTime {\n    callStart\n    __typename\n  }\n  notes\n  totalNetAmount\n  callDate\n  totalOrderCount\n  promotionOrderCount\n  __typename\n}\n\nfragment OutletCategoryFragment on RetailOutlet {\n  id\n  title\n  address\n  panNumber\n  Category {\n    id\n    title\n    Channel {\n      id\n      title\n      __typename\n    }\n    __typename\n  }\n  Route {\n    ...RouteTitleFragment\n    __typename\n  }\n  __typename\n}\n\nfragment RouteTitleFragment on Route {\n  id\n  title\n  __typename\n}\n\nfragment UserTitleFragment on User {\n  id\n  fullName\n  __typename\n}\n\nfragment DistributorFragment on Distributor {\n  id\n  title\n  __typename\n}\n\nfragment CallOrderValueFragment on CallOrderValue {\n  discountAmount\n  billDiscount\n  netAmount\n  grossAmount\n  topUpDiscount\n  subTotal\n  __typename\n}\n\nfragment BillDisocuntDetailsFragment on BillDiscountData {\n  id\n  amount\n  orderIds\n  title\n  __typename\n}\n"
+}
