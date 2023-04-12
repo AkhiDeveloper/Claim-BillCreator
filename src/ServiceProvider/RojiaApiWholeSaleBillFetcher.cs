@@ -5,13 +5,13 @@ using System.Net.Http.Headers;
 
 namespace src.ServiceProvider
 {
-    internal class RojiaApiBillFetcher
+    internal class RojiaApiWholeSaleBillFetcher
         : IBillFetcher
     {
         private readonly HttpClient _httpClient;
         private string _authToken;
 
-        public RojiaApiBillFetcher(string base_address, string username, string password)
+        public RojiaApiWholeSaleBillFetcher(string base_address, string username, string password)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(base_address);
@@ -44,8 +44,8 @@ namespace src.ServiceProvider
             reqObj["variables"]["filter"]["dateRange"]["end"] = to.ToString("yyyy-MM-dd");
             if(userId != null)
             {
-                reqObj["variables"]["filter"]["filters"][0]["column"] = "user_id";
-                reqObj["variables"]["filter"]["filters"][0]["value"][0] = userId;
+                reqObj["variables"]["filter"]["filters"][1]["column"] = "user_id";
+                reqObj["variables"]["filter"]["filters"][1]["value"][0] = userId;
             }
 
             //Sending Request
@@ -76,8 +76,8 @@ namespace src.ServiceProvider
             reqObj["variables"]["filter"]["dateRange"]["end"] = to.ToString("yyyy-MM-dd");
             if (userId != null)
             {
-                reqObj["variables"]["filter"]["filters"][0]["column"] = "user_id";
-                reqObj["variables"]["filter"]["filters"][0]["value"][0] = userId;
+                reqObj["variables"]["filter"]["filters"][1]["column"] = "user_id";
+                reqObj["variables"]["filter"]["filters"][1]["value"][0] = userId;
             }
             reqObj["variables"]["offset"] = 0;
             reqObj["variables"]["limit"] = tab.Invoiced;

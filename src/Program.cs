@@ -16,6 +16,7 @@ try
     char choice;
     Console.Write("Press Y/y to change year or any key to proceed?\t");
     choice = Console.ReadKey().KeyChar.ToString().ToLower()[0];
+    Console.WriteLine();
     while (choice == 'y')
     {
         Console.Write("Enter the year:\t");
@@ -30,6 +31,7 @@ try
     Console.WriteLine($"Selected Year:\t{month}");
     Console.Write("Press Y/y to change year or any key to proceed?\t");
     choice = Console.ReadKey().KeyChar.ToString().ToLower()[0];
+    Console.WriteLine();
     while (choice == 'y')
     {
         Console.Write("Enter the year:\t");
@@ -44,15 +46,14 @@ try
         }
     }
     string baseAddress = "https://brit.udn.rosia.one/api";
-    IBillFetcher fetcher = new RojiaApiBillFetcher(baseAddress, username, password);
+    IBillFetcher fetcher = new RojiaApiWholeSaleBillFetcher(baseAddress, username, password);
     var from = new DateOnly(year, month, 1);
     var to = new DateOnly(year, month+1, 1);
     var bills = await fetcher.FetchInvoices(from, to, userid);
-
-    var combined_bills = await BillCombinerStatic.CombineBillByOutlet(bills);
-
-    IWholeSaleClaimCreator claimCreator = new WholsaleClaimCreator();
-    var claim = claimCreator.CreateClaimFromBills(combined_bills);
+    IClaimFileCreator fileCreator = new ClaimExcelFileCreator();
+    await fileCreator.CreateFile(bills);
+    fileCreator.Dispose();
+    Console.WriteLine("Sucessfull downloaded");
 }
 catch
 {

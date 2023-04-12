@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace src.Models
 {
-    public class WholeSaleClaim
+    public class Claim
     {
         private IList<WholesaleClaimItem> _partyClaims;
         private DateTime _createdDate;
         private int _year;
         private int _month;
 
-        public WholeSaleClaim()
+        public Claim()
         {
             _createdDate = DateTime.Now;
             Year = DateTime.Now.Year;
@@ -21,7 +21,7 @@ namespace src.Models
             _partyClaims = new List<WholesaleClaimItem>();
         }
 
-        public WholeSaleClaim(DateTime createdDate, int year, int month)
+        public Claim(DateTime createdDate, int year, int month)
         {
             CreatedDate = createdDate;
             Year = year;
@@ -29,7 +29,7 @@ namespace src.Models
             _partyClaims = new List<WholesaleClaimItem>();
         }
 
-        public WholeSaleClaim(int year, int month)
+        public Claim(int year, int month)
         {
             _createdDate = DateTime.Now;
             Year = year;

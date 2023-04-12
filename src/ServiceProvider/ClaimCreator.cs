@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace src.ServiceProvider
 {
-    public class WholsaleClaimCreator
-        : IWholeSaleClaimCreator
+    public class ClaimCreator
+        : IClaimCreator
     {
-        public WholeSaleClaim CreateClaimFromBills(IEnumerable<Bill> bills)
+        public Claim CreateClaimFromBills(IEnumerable<Bill> bills)
         {
-            var wholesaleclaim = new WholeSaleClaim();
+            var wholesaleclaim = new Claim();
             foreach (var bill in bills)
             {
                 var claim_item = new WholesaleClaimItem();
