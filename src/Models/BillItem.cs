@@ -13,7 +13,21 @@ namespace src.Models
         public int Quantity { get; set; }
         public decimal Rate { get; set; }
         public decimal DiscountRate { get; set; }
+
         public decimal Amount { get
+            {
+                return Quantity * Rate;
+            } 
+        }
+
+        public decimal DiscountAmount {
+            get
+            {
+                return (Quantity * Rate) * DiscountRate;
+            }
+        }
+
+        public decimal DiscountedAmount { get
             {
                 return (Quantity * Rate) * (1 - DiscountRate);
             }

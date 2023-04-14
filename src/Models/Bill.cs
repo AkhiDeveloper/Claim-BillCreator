@@ -17,24 +17,24 @@ namespace src.Models
             return decimal.Round(Items.Sum(x => x.Amount), 2, MidpointRounding.ToPositiveInfinity);
         }
 
-        public decimal DiscountAmount(decimal discountrate = 0.000m)
+        public decimal Discount(decimal discount = 0.00m)
         {
-            return decimal.Round(SubTotal() * discountrate, 2, MidpointRounding.ToPositiveInfinity);
+            return decimal.Round(this.SubTotal() * discount, 2, MidpointRounding.ToPositiveInfinity);
         }
 
-        public decimal TaxableAmount(decimal discountRate = 0.000m)
+        public decimal TaxableAmount(decimal discount = 0.00m)
         {
-            return decimal.Round(SubTotal() - DiscountAmount(discountRate), 2, MidpointRounding.ToPositiveInfinity);
+            return decimal.Round(SubTotal() - Discount(discount), 2, MidpointRounding.ToPositiveInfinity);
         }
 
-        public decimal TaxAmount(decimal taxRate = 0.13m, decimal discountRate = 0.000m)
+        public decimal TaxAmount(decimal taxRate = 0.13m, decimal discount = 0.00m)
         {
-            return decimal.Round(TaxableAmount(discountRate) * taxRate, 2, MidpointRounding.ToPositiveInfinity);
+            return decimal.Round(TaxableAmount(discount) * taxRate, 2, MidpointRounding.ToPositiveInfinity);
         }
 
-        public decimal TotalAmount(decimal taxRate = 0.13m, decimal discountRate = 0.000m)
+        public decimal TotalAmount(decimal taxRate = 0.13m, decimal discount = 0.00m)
         {
-            return decimal.Round(TaxableAmount(discountRate) + TaxAmount(taxRate, discountRate), 2, MidpointRounding.ToPositiveInfinity);
+            return decimal.Round(TaxableAmount(discount) + TaxAmount(taxRate, discount), 2, MidpointRounding.ToPositiveInfinity);
         }
     }
 }

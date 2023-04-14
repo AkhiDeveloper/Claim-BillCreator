@@ -43,6 +43,7 @@ namespace src.ServiceProvider
                 new_item.Name = item.First().Name;
                 new_item.Rate = item.First().Rate;
                 new_item.Quantity = item.Sum(x => x.Quantity);
+                new_item.DiscountRate = item.Max(x  => x.DiscountRate); 
                 result.Add(new_item);
             }
             return result;

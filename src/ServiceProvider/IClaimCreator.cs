@@ -9,6 +9,6 @@ namespace src.ServiceProvider
 {
     public interface IClaimCreator
     {
-        Claim CreateClaimFromBills(IEnumerable<Bill> bills);
+        Claim CreateClaimFromBills(IEnumerable<Bill> bills, decimal discount = 0.00m, decimal taxRate = 0.13m);
     }
 }

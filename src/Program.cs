@@ -50,8 +50,9 @@ try
     var from = new DateOnly(year, month, 1);
     var to = new DateOnly(year, month+1, 1);
     var bills = await fetcher.FetchInvoices(from, to, userid);
+    var combined_bills = await BillCombinerStatic.CombineBillByOutlet(bills);
     IClaimFileCreator fileCreator = new ClaimExcelFileCreator();
-    await fileCreator.CreateFile(bills);
+    await fileCreator.CreateFile(combined_bills, discount: 0.05m);
     fileCreator.Dispose();
     Console.WriteLine("Sucessfull downloaded");
 }
