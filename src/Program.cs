@@ -34,7 +34,7 @@ try
     Console.WriteLine();
     while (choice == 'y')
     {
-        Console.Write("Enter the year:\t");
+        Console.Write("Enter the month (1-12):\t");
         var input = Console.ReadLine();
         var isInt = int.TryParse(input, out month);
         if (isInt)
@@ -64,7 +64,7 @@ catch
 finally
 {
     Console.ForegroundColor= ConsoleColor.White;
-    Console.WriteLine("Press any key to exit?");
+    Console.WriteLine("Press 0 to exit?");
     int i = 0;
     do
     {
