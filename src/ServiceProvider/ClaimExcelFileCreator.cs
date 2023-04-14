@@ -27,7 +27,7 @@ namespace src.ServiceProvider
             _fileManager = new FileManager();
             _claimCreator = new ClaimCreator();
             _billCombiner = new BillCombiner();
-            string formatFilePath = "Assets/Excel/ClaimFormat.xlsx";
+            string formatFilePath = Path.Combine(Global.AppDataPath, "Assets/Excel/ClaimFormat.xlsx");
             _formatPack = new ExcelPackage(formatFilePath);
             _formatBook = _formatPack.Workbook;
             _claimFormatSheet = _formatBook.Worksheets[0];

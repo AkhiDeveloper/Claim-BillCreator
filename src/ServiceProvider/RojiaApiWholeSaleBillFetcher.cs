@@ -20,7 +20,7 @@ namespace src.ServiceProvider
 
         private async Task Login(string username, string password)
         {
-            string path = "Assets/Json/LoginRequestBody.json";
+            string path = Path.Combine(Global.AppDataPath, "Assets/Json/LoginRequestBody.json");
             string requestBodyJson = File.ReadAllText(path);
             JObject reqObj = JObject.Parse(requestBodyJson);
             reqObj["variables"]["username"] = username;
@@ -37,7 +37,7 @@ namespace src.ServiceProvider
 
         private async Task<Tab> FetchTab(DateOnly from, DateOnly to, string? userId)
         {
-            string path = "Assets/Json/TabRequestBody.json";
+            string path = Path.Combine(Global.AppDataPath, "Assets/Json/TabRequestBody.json");
             string requestBodyJson = File.ReadAllText(path);
             JObject reqObj = JObject.Parse(requestBodyJson);
             reqObj["variables"]["filter"]["dateRange"]["start"] = from.ToString("yyyy-MM-dd");
@@ -69,7 +69,7 @@ namespace src.ServiceProvider
         {
             IList<Bill> result = new List<Bill>();
             var tab = await this.FetchTab(from, to, userId);
-            string path = "Assets/Json/InvoicedRequestBody.json";
+            string path = Path.Combine(Global.AppDataPath, "Assets/Json/InvoicedRequestBody.json");
             string requestBodyJson = File.ReadAllText(path);
             JObject reqObj = JObject.Parse(requestBodyJson);
             reqObj["variables"]["filter"]["dateRange"]["start"] = from.ToString("yyyy-MM-dd");
@@ -105,7 +105,7 @@ namespace src.ServiceProvider
         private async Task<IEnumerable<BillItem>> FetchOrders(int id)
         {
             IList<BillItem> items = new List<BillItem>();
-            string path = "Assets/Json/InvoicedOrdersRequestBody.json";
+            string path = Path.Combine(Global.AppDataPath,"Assets/Json/InvoicedOrdersRequestBody.json");
             string requestBodyJson = File.ReadAllText(path);
             JObject reqObj = JObject.Parse(requestBodyJson);
             reqObj["variables"]["input"]["id"] = id;

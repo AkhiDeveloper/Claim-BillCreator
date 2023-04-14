@@ -1,8 +1,8 @@
 ﻿using OfficeOpenXml;
 using src.ServiceProvider;
-
 try
 {
+    //Console.WriteLine(Directory.GetCurrentDirectory());
     ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
     Console.WriteLine("!---------- Claim Bill Creator (Rojia) ------------!");
     Console.WriteLine();
@@ -28,7 +28,7 @@ try
         }
     }
     var month = DateTime.Now.Month - 1;
-    Console.WriteLine($"Selected Year:\t{month}");
+    Console.WriteLine($"Selected Month:\t{month}");
     Console.Write("Press Y/y to change year or any key to proceed?\t");
     choice = Console.ReadKey().KeyChar.ToString().ToLower()[0];
     Console.WriteLine();
