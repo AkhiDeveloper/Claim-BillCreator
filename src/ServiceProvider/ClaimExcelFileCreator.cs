@@ -41,20 +41,21 @@ namespace src.ServiceProvider
             _formatPack.Dispose();
         }
 
-        public async Task CreateFile(IEnumerable<Bill> bills, string? filepath = null, decimal discount = 0.00m, decimal taxRate = 0.13m)
+        public async Task CreateFile(string companyName, IEnumerable<Bill> bills, string address = "", string phoneNumber = "", string? filepath = null, decimal discount = 0.00m, decimal taxRate = 0.13m, int? month = null, int? year = null)
         {
             //creating claim
-            var claim = _claimCreator.CreateClaimFromBills(bills, discount, taxRate);
+            var claim = _claimCreator.CreateClaimFromBills(companyName, bills, discount, taxRate, year: year, month: month, address, phoneNumber);
 
             if (String.IsNullOrEmpty(filepath))
             {
-                filepath = @$"C:\Users\DishHome\Desktop\claimfile_{DateTime.UtcNow.Ticks}.xlsx";
+                filepath = Path.Combine(Global.DefaultClaimSavePath, $"claimfile_{DateTime.UtcNow.Ticks}.xlsx");
             }
             var parentfolder = Directory.GetParent(filepath);
             if (!parentfolder.Exists)
             {
                 parentfolder.Create();
             }
+
             //getting ready excel sheet
             File.Create(filepath).Close();
             var excelpack = new ExcelPackage(new FileInfo(filepath));
@@ -131,8 +132,12 @@ namespace src.ServiceProvider
         {
             return Task.Run(() =>
             {
+                var month = new DateTime(DateTime.Now.Year, claim.Month, 1).ToString("MMMMM");
+                claimSheet.Cells["A1"].Value = (claim.CompanyName ?? "Company Name").ToUpper();
+                claimSheet.Cells["A2"].Value = (claim.Address ?? "Address").ToUpper();
+                claimSheet.Cells["A3"].Value = claim.GetPhoneNumber();
                 claimSheet.Cells["D5"].Value = $"Date: {claim.CreatedDate.ToString("yyyy/MM/dd")}";
-                claimSheet.Cells["A7"].Value = $"sub: details about whole sales discount {claim.CreatedDate.ToString("MMMMM")}".ApplyCase(LetterCasing.Title);
+                claimSheet.Cells["A7"].Value = $"sub: details about whole sales discount {month}".ApplyCase(LetterCasing.Title);
                 claimSheet.Cells["A9"].Value = "dear sir/madam,".ApplyCase(LetterCasing.Title);
                 claimSheet.Cells["A10"].Value = "              With reference to the above subject, I would like to submit my expenses at wholesales. The details about expenses are given below.";
 

@@ -10,7 +10,25 @@ try
     var username = Console.ReadLine();
     Console.Write("Password:\t");
     var password = Console.ReadLine();
-    string userid = "630";
+    string? userid = null;
+    string? companyName = null;
+    string? address = null;
+    string? phoneNumber = null;
+    switch (username.Trim())
+    {
+        case "mishraaalok123@gmail.com":
+            userid = "630";
+            companyName = "MAA KALI AND LAXMI ENTERPRISES";
+            address = "SHANTINAGAR,BANESHWOR";
+            phoneNumber = "9849918525/9843888939";
+            break;
+        case "baisnabdevi@gmail.com":
+            userid = "1309";
+            companyName = "Ma baisnabdevi enterprises";
+            address = "Himsekhar marg, shantinagar";
+            phoneNumber = "9843888939/9808532091";
+            break;
+    }
     var year = DateTime.Now.Year;
     Console.WriteLine($"Selected Year:\t{year}");
     char choice;
@@ -52,14 +70,17 @@ try
     var bills = await fetcher.FetchInvoices(from, to, userid);
     var combined_bills = await BillCombinerStatic.CombineBillByOutlet(bills);
     IClaimFileCreator fileCreator = new ClaimExcelFileCreator();
-    await fileCreator.CreateFile(combined_bills, discount: 0.05m);
+    var filename = $"{username}_claim_{DateTime.Now.Ticks}.xlsx";
+    var filepath = Path.Combine(Global.DefaultClaimSavePath, filename);
+    await fileCreator.CreateFile(companyName, combined_bills, discount: 0.05m, filepath: filepath, year: year, month: month, address: address, phoneNumber: phoneNumber);
     fileCreator.Dispose();
     Console.WriteLine("Sucessfull downloaded");
 }
-catch
+catch(Exception ex)
 {
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine("Operation Failed");
+    Console.WriteLine(ex.Message);
 }
 finally
 {
